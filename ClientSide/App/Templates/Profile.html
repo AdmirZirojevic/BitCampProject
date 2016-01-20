@@ -1,0 +1,132 @@
+﻿<br />
+<br />
+<h4 class="name">{{ctrl.service.name}}</h4>
+<div class="col-md-8 col-xs-8 thumb">
+    <img ng-src="{{ctrl.service.profileImg}}" id="picture" alt="" />
+</div>
+
+
+<br />
+<div ng-controller="UploadController" id="uploadImg">
+    <form name="uploadForm" id="uploadImage" class="form-inline">
+        <fieldset class="form-inline">
+
+            <input style="display:none" id="image" class="col-lg-8" type="file" ngf-select ng-model="picFile" name="file"
+                   accept="image/*" ngf-max-size="2MB" required ngf-validate="{pattern: '.jpg,.png,jpeg'}">
+            <input type="button" class="btn btn-default col-lg-offset-2" value="Edit Picture" onclick="document.getElementById('image').click();" id="buttonUpload" />
+
+            <button id="submitUpload" class="btn btn-success col-lg-offset-2" ng-disabled="!uploadForm.$valid || button"
+                    ng-click="uploadPic(picFile); button=true">
+                Upload
+            </button>
+
+            <div ng-show="uploadForm.file.$error.maxSize" style="margin-left:15px">
+                <strong>File too large</strong>
+                {{picFile.size / 1000000|number:1}}<strong>MB: max 2MB</strong>
+            </div>
+            <div ng-show="uploadForm.file.$error.pattern" style="margin-left:15px">
+                <strong>File Not Supported!</strong>     
+                <br />
+                <strong>Supported files are: .jpg, .png, .jpeg</strong>          
+            </div>
+
+            <div>
+                <img ng-show="uploadForm.file.$valid" ngf-thumbnail="picFile" width="100" height="100" id="imagePreview">
+            </div>           
+           
+            <span style="height:20px" class="progress" ng-show="picFile.progress >= 0">
+                <div style="width:{{picFile.progress}}%"
+                     ng-bind="picFile.progress + '%'"></div>
+            </span>
+            <span ng-show="picFile.result">Upload Successful</span>
+            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+
+        </fieldset>
+        <br>
+    </form>
+</div>
+
+
+<hr />
+<div class="row" ng-if="ctrl.service.hasMentor">
+    <div class="col-md-12 col-xs-12 ">
+        <table class="tableTitle">
+            <tr>
+                <th class="tableTitle">
+                    Mentor
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <!--<input type="button" class="btn btnCourses" ui-sref="mentorInfo()" value="{{ctrl.service.mentor}}" />-->
+                    <a class="btn btnCourses" ui-sref="mentorInfo()">{{ctrl.service.mentor}}</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row" ng-if="ctrl.service.hasStudents">
+    <div class="col-md-12 col-xs-12">
+        <table class="tableTitle">
+            <tr>
+                <th class="tableTitle">Students:</th>
+            </tr>
+            <tr ng-repeat="student in ctrl.service.students">
+                <td><a class="btn btnCourses" ui-sref="studentTable({name: student.FullName, id: student.Id })">{{student.FullName}}</a> </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<hr />
+<div class="row" ng-if="ctrl.service.hasCourses">
+    <div class="col-md-12 col-xs-12">
+        <table class="tableTitle">
+            <tr>
+                <th class="tableTitle">Courses</th>
+            </tr>
+            <tr ng-repeat="course in ctrl.service.courses">
+                <td><a class="btn btnCourses" ui-sref="courseFeed({id: course.Course.Id, name: course.Course.Name })">{{course.Course.Name}}</a> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row" ng-if="ctrl.service.hasStudentsCourses">
+    <div class="col-md-12 col-xs-12">
+        <table class="tableTitle">
+            <tr>
+                <th class="tableTitle">Courses</th>
+            </tr>
+            <tr ng-repeat="course in ctrl.service.studentsCourses">
+                <td><a class="btn btnCourses" ui-sref="courseFeed({id: course.Id,name: course.Name })">{{course.Name}}</a> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <table class="tableTitle">
+            <tr>
+                <th class="tableTitle">
+                    Individual Assignments
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <div ng-if="ctrl.service.isMentor">
+                        <a class="btn btnCourses" ui-sref="individualAssignmentsMent">Full List</a>
+                    </div>
+                    <div ng-if="ctrl.service.isStudent">
+                        <a class="btn btnCourses" ui-sref="individualAssignments">Full List</a>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<hr />
+

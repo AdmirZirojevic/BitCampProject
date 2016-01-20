@@ -1,0 +1,37 @@
+﻿@model BitClassroom.DAL.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Delete";
+}
+<h4 style="padding-top:15px; padding-bottom:5px; color:red">Are you sure you want to terminate this mentorship?</h4>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal" id="mentorsDelete">
+        <dt>
+            @Html.DisplayName("Mentor: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mentor.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Student: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color" id="mentorsDeleteLinks">
+               <input type="submit" value="Terminate" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

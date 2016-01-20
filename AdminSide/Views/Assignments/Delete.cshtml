@@ -1,0 +1,77 @@
+﻿@model BitClassroom.DAL.Models.Assignment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h4 style="padding-top:15px; padding-bottom:5px; color:red">Are you sure you want to delete this assignment?</h4>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Created By:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Course Name:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Due Date:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Assignment Title:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Content:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Start Date:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecDate)
+        </dd>
+
+        <dt>
+           @Html.DisplayName("Type:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color" id="AssignmentsDeleteLinks">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

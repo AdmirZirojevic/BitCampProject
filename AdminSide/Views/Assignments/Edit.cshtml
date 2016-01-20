@@ -1,0 +1,104 @@
+﻿@model BitClassroom.DAL.Models.Assignment
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (@Html.BeginForm("Edit", "Assignments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" id="AssignmentsEdit">
+        <h4>Assignment</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Course)
+        @Html.HiddenFor(model => model.CourseId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DueDate, "Due Date:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               
+                <input id="datetimepicker" type="text" class="form-control" name="DueDate" value="@Model.DueDate">
+                @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, "Assignment Title:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, "Content:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VisibleToMentor, "Visible to Mentor :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.VisibleToMentor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.VisibleToMentor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+
+        <div class="col-md-offset-2">
+            @Html.DisplayName("Files:")
+            <div class="form-group">
+                <div class="col-md-10">
+
+                    @foreach (var item in Model.TeacherUploads)
+                    {
+                        <div id="@item.Id">
+                            <button type="button" value="Remove" onclick="DeleteBlobInEdit('@item.Content',@item.Id)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                            <a href="@item.Content">
+                                @Html.DisplayFor(model => item.FileName)
+                            </a><br />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="file" name="FileUpload" multiple />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div id="AssignmentsEditLinks">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+
+  
+
+
+        $('#datetimepicker').datetimepicker();
+</script>
+   
+}

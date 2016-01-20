@@ -1,0 +1,95 @@
+﻿@model PagedList.IPagedList<BitClassroom.DAL.Models.ApplicationUser>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>List of Mentors</h3>
+
+<p id="mentorsIndexLinks">
+    @Html.ActionLink("Assign New Mentor", "Create")
+</p>
+
+
+
+<div class="col-lg-5 col-lg-offset-4">
+
+    <row>
+        <div class="col-md-2">
+            @using (Html.BeginForm("Index", "Mentors", FormMethod.Get))
+            {
+                <input type="submit" class="btn btn-primary" value="Reset" />
+            }
+
+        </div>
+        <div class="col-md-9">
+            @using (Html.BeginForm("Index", "Mentors", FormMethod.Get))
+            {
+                <input type="submit" class="btn btn-primary" value="Search" /> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            }
+        </div>
+    </row>
+
+</div>
+<br />
+<br />
+<br />
+
+
+<table class="table" id="mentorsindex">
+    <tr>
+        <th>
+            @Html.ActionLink("Mentor's Name", "Index", new { sortingOrder = ViewBag.MentorNameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Mentor's Last Name", "Index", new { sortingOrder = ViewBag.MentorLastnameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Student's Name", "Index", new { sortingOrder = ViewBag.StudentNameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Student's Last Name", "Index", new { sortingOrder = ViewBag.StudentLastnameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mentor.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mentor.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+
+            <td>
+               
+                @Html.ActionLink("Details", "Details", new { studentId = item.Id, mentorId = item.MentorId }) |
+                @Html.ActionLink("Unassign", "Delete", new { studentId = item.Id, mentorId = item.MentorId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+
+@using (Html.BeginForm("Index", "Home", "Home"))
+{
+    <input type="submit" class="btn btn-primary" value="Back" />
+}

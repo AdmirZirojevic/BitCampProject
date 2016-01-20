@@ -1,0 +1,48 @@
+﻿@model BitClassroom.DAL.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <h3 style="padding-top:15px">Mentor & Student Info </h3>
+    <hr />
+    <dl class="dl-horizontal" style="font-size:16px">
+        <dt>
+            @Html.DisplayName("Mentor's Name: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mentor.Name)
+        </dd>
+        <dt>
+            @Html.DisplayName("Mentor's Last Name: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mentor.Lastname)
+        </dd>
+        <dt>
+            @Html.DisplayName("Student's Name: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Student's Last Name: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+
+        
+
+    </dl>
+</div>
+<p>
+ 
+    @Html.ActionLink("Back to List", "Index")
+</p>

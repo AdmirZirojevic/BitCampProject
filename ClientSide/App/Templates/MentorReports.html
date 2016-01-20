@@ -1,0 +1,55 @@
+﻿
+    
+     <h4 style="text-align:center; padding-top:2em"> Mentor Reports </h4>
+
+    <hr />
+
+  
+    <span ng-init="ctrl.isUpperValid = !questionResponseFormName.$valid"></span>
+    <div id="mrApi">
+        <div ng-repeat="question in ctrl.service.surveyQuestions" ng-init="question.questionResponse = {}">
+            {{$index + 1}}. {{question.Name}}<br />
+
+            <form id="MrAnswers" name="questionResponseFormName" class="questionResponseFormKlasa form-group" id="questionResponseForm" ng-submit="ctrl.postQuestionResponse($index,question.SurveyId,question.Id)">
+                <textarea class="form-control commentsTextArea" type="text" ng-required="true" ng-model="ctrl.service.surveyQuestions[$index].questionResponse.Answer" />
+              
+                <button type="submit" value="Save" class="btn btn-info ng-hide" id="questionResponseFormSubmit" />
+                      
+            </form>
+       
+        </div>
+        <input type="button" style="display:none" id="submitMentorReport" value="sumbitQuestionResponses" onclick="submitAllForms()" />
+
+        <form id="mrApi" name="myForm" ng-submit="ctrl.createMentorReport(ctrl.data.repeatSelect)" class="form-group">
+            <label for="repeatSelect">Select a Report to Fill</label> <br />
+            <select class="form-control" name="repeatSelect" id="dropDownMrList" ng-model="ctrl.data.repeatSelect" ng-change="ctrl.service.getSurveyQuestions(ctrl.data.repeatSelect); ctrl.StudentSurveyComb(ctrl.data.repeatSelect)">
+                <option id="dropDownMrList" ng-repeat=" survey in ctrl.service.surveys" value="{{survey.Id}}">
+                    {{survey.Title}}
+
+                </option>
+            </select>
+            <br />
+            <br />
+         
+            <p style="color:red;  font-size:0.8em">Please note that  you will not be able to edit reports once submitted!</p>       
+         
+               <input type="submit" value="submit" onclick="document.getElementById('submitMentorReport').click();" class=" btn btn-primary" />
+          
+        </form>
+
+    </div>
+   
+
+    <hr />
+
+
+
+<script>
+
+    function submitAllForms()
+    {
+        var klik = $('.questionResponseFormKlasa').submit();
+       // var drugiKlik = $('#nekiADJI').submit();
+    }   
+</script>
+

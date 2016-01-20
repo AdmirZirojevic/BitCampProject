@@ -1,0 +1,85 @@
+﻿@model BitClassroom.DAL.Models.Assignment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Assignment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Username:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+         @Html.DisplayName("Course Name:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.Name)
+        </dd>
+
+        <dt>
+         @Html.DisplayName("Due Date:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+
+        <dt>
+          @Html.DisplayName("Title:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+          @Html.DisplayName("Content:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+          @Html.DisplayName("Start Date:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecDate)
+        </dd>
+
+        <dt>
+          @Html.DisplayName("Type:")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Files:")
+        </dt>
+        @foreach (var item in Model.TeacherUploads)
+        {
+        <dd>
+            <a href="@Html.DisplayFor(model => item.Content)"> @Html.DisplayFor(model => item.FileName) </a>  <br />
+        </dd>
+        }
+        
+
+    </dl>
+</div>
+<p id="AssignmentsDetailsLinks">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

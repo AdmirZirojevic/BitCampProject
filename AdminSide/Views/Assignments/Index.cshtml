@@ -1,0 +1,105 @@
+﻿@model PagedList.IPagedList<BitClassroom.DAL.Models.Assignment>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Course Assignments</h2>
+
+<p id="AssignmentsIndexLinks">
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+<div class="col-lg-5 col-lg-offset-4">
+   
+        <row>
+
+            <div class="col-md-2">
+                @using (Html.BeginForm("Index", "Assignments", FormMethod.Get))
+                {
+                    <input type="submit" class="btn btn-primary" value="Reset" />
+                }
+
+            </div>
+            <div class="col-md-9">
+            @using (Html.BeginForm("Index", "Assignments", FormMethod.Get))
+            {
+                <input type="submit" class="btn btn-primary" value="Search" /> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            }
+            </div>
+        </row>
+ 
+</div>
+<br />
+<br />
+<br />
+<table class="table">
+     <tr>
+        <th>
+            @Html.ActionLink("Created By", "Index", new { sortingOrder = ViewBag.UsernameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Course", "Index", new { sortingOrder = ViewBag.CourseSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+         <th>
+             @Html.ActionLink("Due Date", "Index", new { sortingOrder = ViewBag.DueDateSort, currentFilter = ViewBag.CurrentFilter })
+         </th>
+        <th>
+            @Html.ActionLink("Title", "Index", new { sortingOrder = ViewBag.TitleSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Date Started", "Index", new { sortingOrder = ViewBag.StartDateSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Type", "Index", new { sortingOrder = ViewBag.TypeSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+    </tr>
+   
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUser.Name) @Html.DisplayFor(modelItem => item.ApplicationUser.Lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DueDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+
+
+@using (Html.BeginForm("Index", "Home", "Home"))
+{
+    <input type="submit" class="btn btn-primary" value="Back" />
+}

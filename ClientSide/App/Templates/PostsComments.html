@@ -1,0 +1,90 @@
+﻿
+    <div class="row">
+        <div class="col-md-4 col-xs-4">
+            <div id="postCard">
+
+                <div style="font-family:Candara">
+                    <p style="font-weight:500; font-size:16px; border:double; padding:5px; padding-left:10px; padding-right:10px; background-color:#2196F3; color:white">
+                        <span>Posted By: <i> {{ctrl.service.applicationUser.FullName}}</i></span><span class="pull-right">{{ctrl.service.type}}</span>
+                    </p>
+
+                    <p style="font-size:16px; text-align:left; text-decoration:underline"><strong> {{ ctrl.service.title}}</strong></p> <br />
+
+                    <p style="font-size:16px">{{ctrl.service.content}}</p>
+                    <br />
+                    <br />
+
+                    <div style="font-size:14px"><span ng-if="ctrl.service.type==='Assignment'" class="pull-right" style="font-weight:400; color:red">Due Date : {{ctrl.service.dueDate | date: 'dd/MM/yyyy HH:mm'}}</span></div>
+
+                    <div ng-if="post.Type==='Assignment'">
+
+                        <button ui-sref-active="active" ui-sref="comment({id: post.Id})" class="btn btn-primary" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"> Comment ({{post.Comments.length}})  </button>
+                    </div>
+                    <div ng-if="post.Type==='Announcement'">
+
+                        <button ui-sref-active="active" ui-sref="comment2({id: post.Id})" class="btn btn-primary" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"> Comment ({{post.Comments.length}})  </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!--FORMA ZA POSTAVLJANJE KOMENTARA-->
+            <form novalidate="novalidate" ng-submit="ctrl.postComment()" id="commentForm">
+                <div class="form-group">
+                    <label>Post a comment:</label>
+                    <textarea type="text"
+                              class="form-control commentsTextArea"
+                              name="Content"
+                              ng-model="ctrl.comment.content"
+                              ng-required="true"
+                              maxlength="160" />
+
+                    {{160 - ctrl.comment.content.length}} remaining
+
+                </div>
+                <input type="submit" value="Post" class="btn btn-success col-md-12 col-xs-12" />
+            </form>
+            <!--FORMA ZA POSTAVLJANJE KOMENTARA END-->
+            <!--ISPIS KOMENTARA-->
+            <div ng-repeat="comment in ctrl.service.comment | orderBy : '-DateCreated'" id="commentCard">
+                <strong>{{comment.Username}}</strong> said : {{comment.Content}}<br />
+                <p class="pull-right">
+                    {{comment.DateCreated|date: 'dd/MM/yyyy HH:mm:ss' }}
+                </p>
+
+
+                <div ng-if="ctrl.loggedUser===comment.UserEmail">
+                    <button class="glyphicon glyphicon-edit" ng-click="showEdit=!showEdit"></button>
+
+                    <button class="glyphicon glyphicon-remove" ng-click="showDelete=!showDelete"></button>
+
+                    <!--EDIT COMMENT-->
+                    <form novalidate="novalidate" ng-submit="ctrl.editComment(comment.Id, comment.UserId,comment.Username,comment.UserEmail)" class="ng-hide" ng-show="showEdit">
+                        <div class="form-group">
+                            <textarea type="text"
+                                      class="form-control commentsTextArea"
+                                      name="Content"
+                                      ng-model="ctrl.comment.content"
+                                      ng-required="true"
+                                      maxlength="160" />
+
+                            {{160 - ctrl.comment.content.length}} remaining
+
+                        </div>
+                        <input type="submit" value="Save" class="btn btn-success" ng-click="showEdit=true" />
+                    </form>
+                    <!--EDIT COMMENT END-->
+                    <!--DELETE COMMENT-->
+                    <form novalidate="novalidate" ng-submit="ctrl.deleteComment(comment.Id)" class="ng-hide" ng-show="showDelete">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                    <!--DELETE COMMENT END-->
+
+                </div>
+                <!--ISPIS KOMENTARA END-->
+            </div>
+        </div>
+    </div>

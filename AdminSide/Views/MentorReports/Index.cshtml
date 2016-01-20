@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BitClassroom.DAL.Models.MentorReport>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Mentor Reports</h2>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Mentor", htmlAttributes: new { @style = "font-weight:bold" })
+        </th>
+        <th>
+            @Html.Label("Student", htmlAttributes: new { @style = "font-weight:bold" })
+        </th>
+        <th>
+            @Html.Label("Report", htmlAttributes: new { @style = "font-weight:bold" })
+        </th>
+        <th>
+            @Html.Label("Date Submitted", htmlAttributes: new { @style = "font-weight:bold" })
+        </th>
+      
+      
+    </tr>
+
+@foreach (var item in Model) 
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mentor.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Survey.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateSubmitted)           
+        </td>     
+           
+        <td>         
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+
+
+}
+
+</table>
+
+
+@using (Html.BeginForm("Index", "Home", "Home"))
+{
+    <input type="submit" class="btn btn-primary" value="Back" />
+}

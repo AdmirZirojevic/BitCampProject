@@ -1,0 +1,29 @@
+﻿<h5>Login as existing user</h5>
+<br />
+<form name="loginForma" novalidate="novalidate" ng-submit="ctrl.login()" class="col-md-12">
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text"
+               class="form-control"
+               name="Email"
+               ng-model="ctrl.user.username"
+               ng-required="true" />
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password"
+               class="form-control"
+               name="Password"
+               ng-model="ctrl.user.password"
+               ng-required="true" />
+    </div>
+
+    <input type="submit" value="Login" class="btn btn-success col-md-12 col-lg-12 col-sm-12 col-xs-12" ng-disabled="ctrl.service.loginButton" />
+
+    <br /><br />
+    <div style="text-align:center; font-size:16px;">
+        <a href="/Helper/AboutUs">About Us</a> | 
+        <a href="/Helper/LoginInfo">Login Info</a>
+    </div>
+</form>
+

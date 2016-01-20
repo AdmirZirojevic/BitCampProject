@@ -1,0 +1,114 @@
+﻿@model PagedList.IPagedList<BitClassroom.DAL.Models.Course>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Courses</h2>
+
+
+@if (User.IsInRole("Admin"))
+{
+<p id="CoursesIndexLinks">
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+
+<div class="col-lg-5 col-lg-offset-4">
+
+    <row>
+        <div class="col-md-2">
+            @using (Html.BeginForm("Index", "Courses", FormMethod.Get))
+            {
+                <input type="submit" class="btn btn-primary" value="Reset" />
+            }
+
+        </div>
+        <div class="col-md-9">
+            @using (Html.BeginForm("Index", "Courses", FormMethod.Get))
+            {
+                <input type="submit" class="btn btn-primary" value="Search" /> @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            }
+        </div>
+    </row>
+
+</div>
+<br />
+<br />
+<br />
+
+
+
+<table class="table" id="searchTable">
+    
+        <tr>
+            <th>
+                @Html.ActionLink("Course Name", "Index", new { sortingOrder = ViewBag.CourseSort, currentFilter = ViewBag.CurrentFilter })
+            </th>     
+            <th>
+               @Html.Label("Price")
+            </th>           
+        </tr>
+    
+ 
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.ActionLink("Export Daily reports to PDF", "GetAllReports", "DailyReports", new { courseId = item.Id },null)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                </td>
+            }
+
+
+
+</tr>
+    }
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+
+@using (Html.BeginForm("Index", "Home", "Home"))
+{
+    <input type="submit" class="btn btn-primary" value="Back" />
+}
+
+
+@section Scripts{
+
+
+   
+    <script>
+      
+    </script>
+}
+

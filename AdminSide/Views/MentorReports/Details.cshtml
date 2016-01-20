@@ -1,0 +1,69 @@
+﻿@model BitClassroom.DAL.Models.MentorReport
+
+@{
+    ViewBag.Title = "Details";
+}
+<br />
+
+<div>
+    <h4>Mentor's Report</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Mentor.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mentor.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Survey)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Survey.Title)
+        </dd>
+        <dt>
+            @Html.Label("Date Submitted", htmlAttributes: new { @style = "font-weight:bold" })
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateSubmitted)
+        </dd>
+        <br />
+        <h5>
+            @Html.Label("Mentor's Answers", htmlAttributes: new { @style = "font-weight:bold; text-decoration: underline" })
+        </h5>
+    </dl>
+    <hr />
+
+    <div>
+
+        @foreach (var item in Model.Responses)
+        {
+
+            <div>
+
+                <h5><strong>@item.SurveyQuestion.Question.QContent </strong> </h5>
+                <hr />
+
+                <p> @item.Answer  </p>
+                <hr />
+            </div>
+        }
+
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<BitClassroom.DAL.Models.Survey>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <div class="form-horizontal">
+            <h4>Survey</h4>
+            <hr />
+            @Html.ValidationSummary(true, " ", new { @class = "text-danger" })
+
+            
+            <div>
+                @Html.DisplayNameFor(model => model.Title)
+            </div>
+
+            <div>
+                @Html.DisplayNameFor(model=>model.MentorId)
+            </div>
+            <div>
+                @Html.DisplayNameFor(model => model.StudentId)
+            </div>
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StudentId, new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.EditorFor(model => model.model.StudentId)
+                    @Html.ValidationMessageFor(model => model.StudentId)
+                </div>
+            </div>
+
+            @foreach (var item in Model.SurveyId)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QuestionId, "Question", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("QuestionId", String.Empty)
+                        @Html.ValidationMessageFor(model => model.QuestionId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answer, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Answer)
+                        @Html.ValidationMessageFor(model => model.Answer)
+                    </div>
+                </div>
+            }
+
+
+        
+
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-6 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#datetimepicker').datetimepicker();
+    </script>
+    }
